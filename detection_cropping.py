@@ -20,22 +20,23 @@ def process_images(bounding_boxes):
         file_name = i['file']
         img = cv2.imread(raw_image_path + file_name)
 
-        print(file_name)
-        detections = i['detections']
+        try:
+            detections = i['detections']
+        except:
+            print('Error in Megadetector')
+            continue
 
         if len(detections) != 0:
             detection_count = 0
             for detect in detections:
                 if detect['category'] == '1':
-                    print(detect)
                     crop_image(detect, img, detection_count, file_name)
                     detection_count = detection_count + 1
 
 
 def crop_image(detect, img, detection_count, file_name):
-    multiple_detections_id = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+    multiple_detections_id = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r']
     (x1, x2, y1, y2) = convert_to_coords(detect['bbox'], img)
-    print(x1, x2, y1, y2)
     cropped_img = img[y1:y2, x1:x2]
     cropped_img = cv2.resize(cropped_img, (224, 224), cv2.INTER_LANCZOS4)
     enhanced_img = enhance_image(cropped_img)
@@ -49,6 +50,7 @@ def enhance_image(cropped_img):
                    [0, -1, 0]])
     sharpened_img = cv2.filter2D(src=cropped_img, ddepth=-1, kernel=kernel)
     return sharpened_img
+
 
 def adapt_name(file_name, detector_count_extension):
     image_id = file_name[:-4]
