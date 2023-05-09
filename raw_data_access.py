@@ -49,7 +49,7 @@ def status_bar_update():
 
 
 if __name__ == '__main__':
-    observations = 'proboscidia_final.csv'
+    observations = 'felids_final.csv'
     df = create_dataset(observations)
 
-    df.head(12000).apply(lambda x: image_download(x), axis=1)
+    df.apply(lambda x: image_download(x), axis=1)
