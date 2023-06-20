@@ -44,23 +44,41 @@ length = 0
 
 
 def create_dataset(observations: list):
+    """This method creates a DataFrame from the specified observations list.
+
+    Note, multiple dataset files can be specified and the taxonomic structure will remain correct.
+    The method removes any Null values from the image_urls, removes the erroneous Felis Catus species,
+    and drops unnecessary columns.
+
+    Returns:
+        (DataFrame): A dataframe of the specified observations file aggregated together.
+    """
     global length
     df_obs = pd.DataFrame()
 
     for observation in observations:
-        df_obs = pd.concat([df_obs, pd.read_csv(data_path + observation)])
+        df_obs = pd.concat([df_obs, pd.read_csv(data_path + observation)])  # Concatenate multiple observations into one dataframe
 
     df_obs = df_obs.dropna(subset=['image_url'])
-
     df_obs = df_obs[df_obs['taxon_species_name'] != 'Felis catus']
+    df_obs = df_obs.drop(columns=['observed_on', 'local_time_observed_at', 'positional_accuracy'])  # Remove unnecessary columns
 
-    # Remove unnecessary columns
-    df_obs = df_obs.drop(columns=['observed_on', 'local_time_observed_at', 'positional_accuracy'])
-    length = len(df_obs)
+    length = len(df_obs)  # Instantiate length value
     return df_obs
 
 
 def sub_species_detection(x):
+    """This method performs subspecies detection based on the information available in the scientific name column.
+
+    This method identifies a subspecies name by definition as containing three distinct words making up the scientific name (unique to subspecies)
+    This method is used in conjunction with the `DataFrame.apply()` method and the lambda expression.
+
+    Args:
+        x (Row): The row of the dataframe representing a single observation.
+
+    Returns:
+        (Row): The same row augmented to include an additional column titled sub_species.
+    """
     name_count = len(x['scientific_name'].split())
     x['sub_species'] = np.nan
     if name_count >= 3:
