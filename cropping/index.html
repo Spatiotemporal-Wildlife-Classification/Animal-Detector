@@ -1,0 +1,1127 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../mega_detector/">
+      
+      
+        <link rel="next" href="../taxon_directory/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
+    
+    
+      
+        <title>3.Create Sub-images - Animal Detection</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.26e3688c.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#detection-cropping-documentation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Animal Detection" class="md-header__button md-logo" aria-label="Animal Detection" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Animal Detection
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3.Create Sub-images
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Animal Detection" class="md-nav__button md-logo" aria-label="Animal Detection" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Animal Detection
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../download/" class="md-nav__link">
+        1.Download Observations Docs
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mega_detector/" class="md-nav__link">
+        2.Mega-detector Animal Detection
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          3.Create Sub-images
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        3.Create Sub-images
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#detection_cropping" class="md-nav__link">
+    detection_cropping
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detection_cropping.adapt_name" class="md-nav__link">
+    adapt_name()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detection_cropping.convert_to_coords" class="md-nav__link">
+    convert_to_coords()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detection_cropping.crop_image" class="md-nav__link">
+    crop_image()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detection_cropping.enhance_image" class="md-nav__link">
+    enhance_image()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detection_cropping.process_images" class="md-nav__link">
+    process_images()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../taxon_directory/" class="md-nav__link">
+        4.Taxonomic Directory Structure Docs
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#detection_cropping" class="md-nav__link">
+    detection_cropping
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detection_cropping.adapt_name" class="md-nav__link">
+    adapt_name()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detection_cropping.convert_to_coords" class="md-nav__link">
+    convert_to_coords()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detection_cropping.crop_image" class="md-nav__link">
+    crop_image()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detection_cropping.enhance_image" class="md-nav__link">
+    enhance_image()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detection_cropping.process_images" class="md-nav__link">
+    process_images()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="detection-cropping-documentation">Detection Cropping Documentation</h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+<a id="detection_cropping"></a>
+  <div class="doc doc-contents first">
+  
+      <p>This file creates sub-images based on Mega-detector animal detections within the raw observation images.</p>
+<p>It is essential, that steps 1 and 2 in the README are completed before this step, as the downloaded raw observation images
+and the object detection bounding_box.json` file are required for this script's execution.</p>
+
+  <p><strong>Attributes:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>root_path</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The absolute path to the root of the project directory.</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><code>raw_image_path</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The complete (absolute + relative) path to the raw image directory.</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><code>processed_image_path</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The save path for the sub-images pointing to the <code>images/cropped</code> directory.</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><code>bounding_box_path</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The path to the <code>bounding_box.json</code> file.</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="detection_cropping.adapt_name" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">adapt_name</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">detector_count_extension</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This method adapts the name of the raw observation image to include the sub-image suffix.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>file_name</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The filename of the raw observation image in the format <code>&lt;Observation id&gt;.jpg</code></p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>detector_count_extension</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The alphabetical character sub-image extension indicating what sub-image number this is.</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>str</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The modified image name to include the sub-image suffix extension.</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>detection_cropping.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">adapt_name</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">detector_count_extension</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This method adapts the name of the raw observation image to include the sub-image suffix.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file_name (str): The filename of the raw observation image in the format `&lt;Observation id&gt;.jpg`</span>
+<span class="sd">        detector_count_extension (str): The alphabetical character sub-image extension indicating what sub-image number this is.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (str): The modified image name to include the sub-image suffix extension.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">image_id</span> <span class="o">=</span> <span class="n">file_name</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">file_name_adapted</span> <span class="o">=</span> <span class="n">image_id</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">detector_count_extension</span> <span class="o">+</span> <span class="s1">&#39;.jpg&#39;</span>
+    <span class="k">return</span> <span class="n">file_name_adapted</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="detection_cropping.convert_to_coords" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">convert_to_coords</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This method converts the <code>bounding_boxes.json</code> <code>bbox</code> values into coordinates used to crop the sub-image</p>
+<p>The <code>bbox</code> JSON dictionary contains the following value:</p>
+<pre><code>bbox: [
+    percentage width of the center of the bounding box,
+    percentage height of the center of the bounding box,
+    The percentage width of bounding box. The percentage is calculated as the percentage of the width of the image,
+    The percentage height of the bounding box. The percentage is calculated as the percentage of the height of the image
+    ]
+</code></pre>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>array</code></td>
+          <td>
+                <code>List</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The list of <code>bbox</code> values for the object detection.</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>img</code></td>
+          <td>
+                <code>Image</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The raw observation image on which the object detection occurred.</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>list</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The list contains the following coordinates: [x_start, x_end, y_start, y_end] to suit the image slicing that produces the cropped image.</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>detection_cropping.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">convert_to_coords</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This method converts the `bounding_boxes.json` `bbox` values into coordinates used to crop the sub-image</span>
+
+<span class="sd">    The `bbox` JSON dictionary contains the following value:</span>
+<span class="sd">    ```</span>
+<span class="sd">    bbox: [</span>
+<span class="sd">        percentage width of the center of the bounding box,</span>
+<span class="sd">        percentage height of the center of the bounding box,</span>
+<span class="sd">        The percentage width of bounding box. The percentage is calculated as the percentage of the width of the image,</span>
+<span class="sd">        The percentage height of the bounding box. The percentage is calculated as the percentage of the height of the image</span>
+<span class="sd">        ]</span>
+<span class="sd">    ```</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        array (List): The list of `bbox` values for the object detection.</span>
+<span class="sd">        img (Image): The raw observation image on which the object detection occurred.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (list): The list contains the following coordinates: [x_start, x_end, y_start, y_end] to suit the image slicing that produces the cropped image.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">x_center</span> <span class="o">=</span> <span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">width</span><span class="p">)</span>
+    <span class="n">y_center</span> <span class="o">=</span> <span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">height</span><span class="p">)</span>
+    <span class="n">bb_width</span> <span class="o">=</span> <span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">width</span><span class="p">)</span>
+    <span class="n">bb_height</span> <span class="o">=</span> <span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">height</span><span class="p">)</span>
+
+    <span class="n">x_start</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x_center</span><span class="p">)</span>
+    <span class="n">y_start</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">y_center</span><span class="p">)</span>
+    <span class="n">x_end</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x_start</span> <span class="o">+</span> <span class="n">bb_width</span><span class="p">)</span>
+    <span class="n">y_end</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">y_start</span> <span class="o">+</span> <span class="n">bb_height</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">x_start</span><span class="p">,</span> <span class="n">x_end</span><span class="p">,</span> <span class="n">y_start</span><span class="p">,</span> <span class="n">y_end</span><span class="p">]</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="detection_cropping.crop_image" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">crop_image</span><span class="p">(</span><span class="n">detect</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">detection_count</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This method crops an image based on the bounding box created by Mega-detector.</p>
+<p>Each image is assigned a sub-image suffix character to represent the current sub-image number.
+The sub-image is enhanced through Lanczos Interpolation and edge enhancement kernels to maintain resolution.
+However, resolution loss still occurs due to the cropping process.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>detect</code></td>
+          <td>
+                <code>JSON dict</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The current object detection of the observation image (from <code>bounding_boxes.json</code>)</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>img</code></td>
+          <td>
+                <code>Image</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The raw observation image in which the objects were detected.</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>detection_count</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The number of sub-images cropped so far.</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>file_name</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name of the raw image in the format <code>&lt;Observation id&gt;.jpg</code></p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>detection_cropping.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">crop_image</span><span class="p">(</span><span class="n">detect</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">detection_count</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This method crops an image based on the bounding box created by Mega-detector.</span>
+
+<span class="sd">    Each image is assigned a sub-image suffix character to represent the current sub-image number.</span>
+<span class="sd">    The sub-image is enhanced through Lanczos Interpolation and edge enhancement kernels to maintain resolution.</span>
+<span class="sd">    However, resolution loss still occurs due to the cropping process.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        detect (JSON dict): The current object detection of the observation image (from `bounding_boxes.json`)</span>
+<span class="sd">        img (Image): The raw observation image in which the objects were detected.</span>
+<span class="sd">        detection_count (int): The number of sub-images cropped so far.</span>
+<span class="sd">        file_name (str): The name of the raw image in the format `&lt;Observation id&gt;.jpg`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">multiple_detections_id</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;j&#39;</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">]</span>
+
+    <span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">y2</span><span class="p">)</span> <span class="o">=</span> <span class="n">convert_to_coords</span><span class="p">(</span><span class="n">detect</span><span class="p">[</span><span class="s1">&#39;bbox&#39;</span><span class="p">],</span>
+                                         <span class="n">img</span><span class="p">)</span>  <span class="c1"># Convert the bounding box values into coordinates for image cropping</span>
+    <span class="n">cropped_img</span> <span class="o">=</span> <span class="n">img</span><span class="p">[</span><span class="n">y1</span><span class="p">:</span><span class="n">y2</span><span class="p">,</span> <span class="n">x1</span><span class="p">:</span><span class="n">x2</span><span class="p">]</span>  <span class="c1"># Crop the image</span>
+
+    <span class="n">cropped_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">cropped_img</span><span class="p">,</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">INTER_LANCZOS4</span><span class="p">)</span>  <span class="c1"># Resize and interpolate image</span>
+    <span class="n">enhanced_img</span> <span class="o">=</span> <span class="n">enhance_image</span><span class="p">(</span><span class="n">cropped_img</span><span class="p">)</span>  <span class="c1"># Perform image enhancement</span>
+
+    <span class="n">count_extension</span> <span class="o">=</span> <span class="n">multiple_detections_id</span><span class="p">[</span><span class="n">detection_count</span><span class="p">]</span>  <span class="c1"># Determine the sub-image suffix</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">processed_image_path</span> <span class="o">+</span> <span class="n">adapt_name</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">count_extension</span><span class="p">),</span> <span class="n">enhanced_img</span><span class="p">)</span>  <span class="c1"># Save cropped image</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="detection_cropping.enhance_image" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">enhance_image</span><span class="p">(</span><span class="n">cropped_img</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>This method attempts to enhance the cropped and resize image through edge enhancement, to ensure that crucial
+details of the image are not lost.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>cropped_img</code></td>
+          <td>
+                <code>Image</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The cropped and resized (interpolated) image to be enhanced.</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>Image</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The edge enhanced image.</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>detection_cropping.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">enhance_image</span><span class="p">(</span><span class="n">cropped_img</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This method attempts to enhance the cropped and resize image through edge enhancement, to ensure that crucial</span>
+<span class="sd">    details of the image are not lost.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        cropped_img (Image): The cropped and resized (interpolated) image to be enhanced.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (Image): The edge enhanced image.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                       <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+    <span class="n">sharpened_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">filter2D</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">cropped_img</span><span class="p">,</span> <span class="n">ddepth</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="n">kernel</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sharpened_img</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<h2 id="detection_cropping.process_images" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">process_images</span><span class="p">(</span><span class="n">bounding_boxes</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Processes each image within the bounding_box.json file and crops them according to the animal detections.</p>
+<p>This method iterates through all images, matching each identified object's category to detect when it matches animal (category 1).
+When a match occurs, the image is cropped and names <Observation id>_<sub-image character>.jpg where the sub-image character
+is an alphabetical character corresponding to the number of sub-images created so for for each observation.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>bounding_boxes</code></td>
+          <td>
+                <code>JSON</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The JSON format of the bounding_boxes file.</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>detection_cropping.py</code></summary>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_images</span><span class="p">(</span><span class="n">bounding_boxes</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Processes each image within the bounding_box.json file and crops them according to the animal detections.</span>
+
+<span class="sd">    This method iterates through all images, matching each identified object&#39;s category to detect when it matches animal (category 1).</span>
+<span class="sd">    When a match occurs, the image is cropped and names &lt;Observation id&gt;_&lt;sub-image character&gt;.jpg where the sub-image character</span>
+<span class="sd">    is an alphabetical character corresponding to the number of sub-images created so for for each observation.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bounding_boxes (JSON): The JSON format of the bounding_boxes file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">bounding_boxes</span><span class="p">[</span><span class="s1">&#39;images&#39;</span><span class="p">]:</span>  <span class="c1"># Iterate through images in the bounding box file</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">raw_image_path</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">)</span>  <span class="c1"># Read in the image</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">detections</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;detections&#39;</span><span class="p">]</span>  <span class="c1"># Try and access the detections JSON (Only occurs if an object was detected)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error in Megadetector&#39;</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">detections</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Detections is not empty</span>
+            <span class="n">detection_count</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Initialize detections counter (sub-image counter)</span>
+            <span class="k">for</span> <span class="n">detect</span> <span class="ow">in</span> <span class="n">detections</span><span class="p">:</span>  <span class="c1"># Loop through the number of detections</span>
+                <span class="k">if</span> <span class="n">detect</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>  <span class="c1"># Category matches to animal</span>
+                    <span class="n">crop_image</span><span class="p">(</span><span class="n">detect</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">detection_count</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>  <span class="c1"># Crop image</span>
+                    <span class="n">detection_count</span> <span class="o">=</span> <span class="n">detection_count</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># Increase detection counter (sub-image counter)</span>
+</code></pre></div></td></tr></table></div>
+      </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+    
+  </body>
+</html>
