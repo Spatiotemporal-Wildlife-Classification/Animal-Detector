@@ -18,7 +18,7 @@ import requests
 
 # Paths
 root_path = sys.path[1]
-csv_path = root_path + '/data/raw_csv/'
+csv_path = root_path + '/data/observations/'
 raw_image_path = root_path + '/data/images/raw/'
 
 # Progress bar variables
