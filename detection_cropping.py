@@ -1,3 +1,14 @@
+"""This file creates sub-images based on Mega-detector animal detections within the raw observation images.
+
+    It is essential, that steps 1 and 2 in the README are completed before this step, as the downloaded raw observation images
+    and the object detection    bounding_box.json` file are required for this script's execution.
+
+    Attributes:
+        root_path (str): The absolute path to the root of the project directory.
+        raw_image_path (str): The complete (absolute + relative) path to the raw image directory.
+        processed_image_path (str): The save path for the sub-images pointing to the `images/cropped` directory.
+        bounding_box_path (str): The path to the `bounding_box.json` file.
+"""
 import json
 import sys
 import numpy as np
@@ -5,33 +16,36 @@ import cv2
 
 root_path = sys.path[1]
 raw_image_path = root_path + '/data/images/raw/'
-processed_image_path = root_path + '/data/images/processed/'
+processed_image_path = root_path + '/data/images/cropped/'
 bounding_box_path = root_path + '/bounding_boxes.json'
 
 
-# Going through the list:
-# Check per image if there are any predictions, if none this can be skipped.
-# If there are predictions check categorical type
-# If categorical type match animal
-# Crop image using bb specifications (may result in 1+ images)
-
 def process_images(bounding_boxes):
-    for i in bounding_boxes['images']:
+    """Processes each image within the bounding_box.json file and crops them according to the animal detections.
+
+    This method iterates through all images, matching each identified object's category to detect when it matches animal (category 1).
+    When a match occurs, the image is cropped and names <Observation id>_<sub-image character>.jpg where the sub-image character
+    is an alphabetical character corresponding to the number of sub-images created so for for each observation.
+
+    Args:
+        bounding_boxes (JSON): The JSON format of the bounding_boxes file.
+    """
+    for i in bounding_boxes['images']:  # Iterate through images in the bounding box file
         file_name = i['file']
-        img = cv2.imread(raw_image_path + file_name)
+        img = cv2.imread(raw_image_path + file_name)  # Read in the image
 
         try:
-            detections = i['detections']
+            detections = i['detections']  # Try and access the detections JSON (Only occurs if an object was detected)
         except:
             print('Error in Megadetector')
             continue
 
-        if len(detections) != 0:
-            detection_count = 0
-            for detect in detections:
-                if detect['category'] == '1':
-                    crop_image(detect, img, detection_count, file_name)
-                    detection_count = detection_count + 1
+        if len(detections) != 0:  # Detections is not empty
+            detection_count = 0  # Initialize detections counter (sub-image counter)
+            for detect in detections:  # Loop through the number of detections
+                if detect['category'] == '1':  # Category matches to animal
+                    crop_image(detect, img, detection_count, file_name)  # Crop image
+                    detection_count = detection_count + 1  # Increase detection counter (sub-image counter)
 
 
 def crop_image(detect, img, detection_count, file_name):
@@ -77,3 +91,4 @@ if __name__ == "__main__":
     bounding_boxes = json.loads(f.read())
 
     process_images(bounding_boxes)
+

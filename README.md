@@ -6,7 +6,7 @@ This repository serves 3 purposes:
 3. Crop Mega-detector animal instanced into sub-images
 4. Arrange each sub-image into a taxonomic directory structure. 
 
-### Download Observations
+### 1. Download Observations
 The `raw_data_access.py` file is responsible for raw image downloads. 
 Please perform the following steps to download the raw images for an iNaturalist observations CSV file.
 
@@ -15,7 +15,7 @@ Please perform the following steps to download the raw images for an iNaturalist
 2. Specify the name of the observation file on line 90.
 3. Execute the file. The progress bar will update you on the status of the download.
 
-### Mega-detector Animal Detection
+### 2. Mega-detector Animal Detection
 This process makes use of [Mega-detector](https://github.com/microsoft/CameraTraps/blob/main/megadetector.md) 
 to detect and place bounding boxes around individual animal instances within a raw image. 
 The bounding boxes, serve as the boundaries around which the images are cropped to produce sub-images per observation. 
@@ -57,5 +57,29 @@ Please perform the following steps:
    ```angular2html
    python detection\run_detector.py "c:\megadetector\md_v5a.0.0.pt" --image_file "some_image_file.jpg" --threshold 0.1
    ```
+   
+   This should produce a file in the same location with the format <name>_detections.jpg.
+   This file will contain the bounding-box drawn on image an animal, vehicle or person was detected.
+8. To run a batch detection on the `dataimages/raw/` directory perform the following: 
+   - Create a file in the project root called `bounding_boxes.json`
+   - Execute the following from terminal. Make sure you are in the `CameraTraps` directory
+   ```angular2html
+   python detection/run_detector_batch.py "$HOME/megadetector/md_v5a.0.0.pt" "$HOME/path/to/Animal-Detector/data/images/raw/" "$HOME/Desktop/git_store/Animal-Detector/bounding_boxes.json" --threshold 0.85 --output_relative_filenames --recursive --checkpoint_frequency 10000
+   ```
+   
+   An example is below:
+   ```angular2html
+   python detection/run_detector_batch.py "$HOME/megadetector/md_v5a.0.0.pt" "$HOME/Desktop/git_store/Animal-Detector/data/images/raw/" "$HOME/Desktop/git_store/Animal-Detector/bounding_boxes.json" --threshold 0.85 --output_relative_filenames --recursive --checkpoint_frequency 10000
+   ```
+   
+   The object identification labels, and bounding box dimensions are written to the `bounding_boxes.json` file.
 
 Please note, when wanting to use the Mega-detector functionality, steps 4 and 5 must be repeated.
+
+#### Example Mega-detector Use
+
+![Raw image](resources/raw.jpg)
+
+![Object Detections](resources/raw_detections.jpg)
+
+### 3. Create Sub-images
