@@ -1,3 +1,21 @@
+"""This file creates a taxonomic directory structure, allocating the cropped images into the correct taxonomic level and directory.
+
+    The taxonomic directory is required for the image classification model training in the Wildlife Classification repository.
+    It makes use of the `image_dataset_from_directory()` function to construct images with the corresponding labels based on the directory structure.
+
+    Attributes:
+        root_path (str): The absolute path to the root of the project directory.
+        cropped_img_path (str): The path to the sub-images of the observations
+        img_path (str): The path to the training directory where the images are arranged within the taxonomic directory.
+        test_path (str): The path to the validation directory where the images are arranged within the taxonomic directory.
+        data_path (str): The path to where the iNaturalist observations are stored.
+        multiple_detections_id (list): The possible suffixes of the sub-images used to identify how many sub-images exist per observation.
+        img_size (int): (528, 528) The size of the images accepted by the EfficientNet-B6 Classification model in Wildlife Classification.
+        test_split (float): The percentage of images to be placed in the validation directory (A 15% validation split)
+        taxonomy_list (list): The list of the taxonomic column names at which the taxon hierarchy will be based on.
+        count (int): The number of sub-images placed in the correct directory.
+        length (int): The total number of observations.
+"""
 import sys
 import random
 import numpy as np
@@ -5,18 +23,22 @@ import pandas as pd
 import os
 import shutil
 
-root_path = root_path = sys.path[1]
-raw_img_path = root_path + '/data/taxon_raw/'
-img_path = root_path + '/data/taxon/'
-test_path = root_path + '/data/taxon_test/'
-data_path = root_path + '/data/processed/'
+# Paths
+root_path = sys.path[1]
+cropped_img_path = root_path + '/data/images/cropped/'
+img_path = root_path + '/data/images/taxon_structured/taxon_train/'
+test_path = root_path + '/data/images/taxon_structured/taxon_validate/'
+data_path = root_path + '/data/observations/'
 multiple_detections_id = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r']
 
+# Image and dataset specification
 img_size = 528
-batch_size = 32
 test_split = 0.15
 
+# Taxonomic Info
 taxonomy_list = ['taxon_family_name', 'taxon_genus_name', 'taxon_species_name', 'sub_species']
+
+# Progress bar variables
 count = 0
 length = 0
 
@@ -84,11 +106,11 @@ def image_download(x):
 
 def multiple_obs(id, path):
     for suffix in multiple_detections_id:
-        raw_path = raw_img_path + str(id) + '_' + suffix + '.jpg'
+        raw_path = cropped_img_path + str(id) + '_' + suffix + '.jpg'
         if os.path.exists(raw_path):
             file_name = path + str(id) + '_' + suffix + '.jpg'
             os.makedirs(os.path.dirname(file_name), exist_ok=True)
-            shutil.move(raw_path, file_name)
+            shutil.copy(raw_path, file_name)
         else:
             break
 
@@ -105,7 +127,7 @@ def status_bar_update():
 
 
 if __name__ == "__main__":
-    observations = ['proboscidia_final.csv', 'felids_final.csv']
+    observations = ['proboscidia_train.csv']
     df = create_dataset(observations)
 
     # Generate sub_species
