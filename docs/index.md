@@ -1,21 +1,40 @@
 # Animal Detector
 
 This repository serves 4 purposes arranged in sequential steps: 
+
 1. Download the raw observation images from iNaturalist observations. 
+
 2. Execute Mega-detector object detection to identify individual animal instances
+
 3. Crop Mega-detector animal instanced into sub-images
+
 4. Arrange each sub-image into a taxonomic directory structure. 
 
-### 1. Download Observations
+The below headings provide information on how to execute each step, what the process entails, and what the expected
+output should be. This page provides additional links to the repositories providing the observations data, and the repositories
+using the resulting data. 
+
+## Data Origin
+Please use the `<dataset_name>_train.csv` file that is located within the [Wildlife Classification](https://github.com/Spatiotemporal-Wildlife-Classification/Wildlife-Classification)
+repository. The data is produced as part of the data preparation process. Please consult the README and the documentation of that repository
+for further information. The link to the documentation is as follows: [https://spatiotemporal-wildlife-classification.github.io/Wildlife-Classification/](https://spatiotemporal-wildlife-classification.github.io/Wildlife-Classification/)
+
+
+## 1. Download Observations
+This process aims to download the observations from the iNaturalist observation urls. 
+
 The `raw_data_access.py` file is responsible for raw image downloads. 
 Please perform the following steps to download the raw images for an iNaturalist observations CSV file.
 
-1. Load the `observations.csv` file into the `observations/` directory. 
+1. Load the `<observations>.csv` file into the `observations/` directory. 
     - In this case, it is the `proboscidia_train.csv` file. This file is available at a public Dataset: [https://www.kaggle.com/datasets/travisdaws/spatiotemporal-wildlife-dataset](https://www.kaggle.com/datasets/travisdaws/spatiotemporal-wildlife-dataset)
 2. Specify the name of the observation file on line 90.
 3. Execute the file. The progress bar will update you on the status of the download.
 
-### 2. Mega-detector Animal Detection
+Please access the [Download Observations Documentation](download.md) for the documentation.
+
+
+## 2. Mega-detector Animal Detection
 This process makes use of [Mega-detector](https://github.com/microsoft/CameraTraps/blob/main/megadetector.md).
 The below documentation is based off the provided instructions in the [Mega-detector](https://github.com/microsoft/CameraTraps/blob/main/megadetector.md) README file.
 To detect and place bounding boxes around individual animal instances within a raw image. 
@@ -77,13 +96,19 @@ Please perform the following steps:
 
 Please note, when wanting to use the Mega-detector functionality, steps 4 and 5 must be repeated.
 
+Please access the [Mega-detector Information](mega_detector.md)
+
 #### Example Mega-detector Use
 
-![Raw image](resources/raw.jpg)
+The below images it the provided raw observation image. 
+<img height="315" src="resources/raw.jpg" width="500" alt="Raw observation Image" style="display: block; margin: 0 auto"/>
 
-![Object Detections](resources/raw_detections.jpg)
+The below image, contains the raw image with object detection applied and illustrated by the red bonding-box. 
+Each bounding-box contains the object detection's certainty of object class.
+A certainty cut-off of 75% is used in the provided instructions.
+<img height="315" src="resources/raw_detections.jpg" width="500" alt="Image Detections" style="display: block; margin: 0 auto"/>
 
-### 3. Create Sub-images
+## 3. Create Sub-images
 The `detection_cropping.py` file is responsible for performing the sub-image cropping process.
 The process makes use of the `bounding_boxes.json` file containing all Mega-detector detections.
 The process, converts the provided bounding boxes for the _animal_ category into coordinates within the image. 
@@ -96,8 +121,23 @@ Please perform the following steps to crop the images according to the Mega-dete
 2. Simply run the script. 
    - The resulting cropped images will be placed within the `images/cropped/` directory.
 
+#### Sub-image Example
+The images below showcase the original image, followed by the Mega-detector object detections.
+<div style="display: flex; justify-content: center;">
+    <img src="resources/raw.jpg" alt="Image 1" style="width: 300px; height: 200px; margin-right: 10px;">
+    <img src="resources/raw_detections.jpg" alt="Image 2" style="width: 300px; height: 200px;">
+</div>
 
-### 4. Taxonomic Directory Structure
+
+The below images showcase the extracted sub-images.
+<div style="display: flex; justify-content: center;">
+    <img src="resources/10006459_a.jpg" alt="Image 1" style="width: 300px; height: 200px; margin-right: 10px;">
+    <img src="resources/10006459_b.jpg" alt="Image 2" style="width: 300px; height: 200px; margin-right: 10px;">
+    <img src="resources/10006459_c.jpg" alt="Image 3" style="width: 300px; height: 200px;">
+</div>
+
+
+## 4. Taxonomic Directory Structure
 This final step places the sub-images into a directory that mimics the taxonomic structure of the dataset. 
 This taxonomic structure enables the use of the keras [`image_dataset_from_directory()`](https://www.tensorflow.org/api_docs/python/tf/keras/utils/image_dataset_from_directory) method 
 in the [Wildlife Classification](https://github.com/Spatiotemporal-Wildlife-Classification/Wildlife-Classification)
@@ -111,5 +151,28 @@ To create the taxonomic directory structure please follow the below steps:
 3. Execute the script. 
    - The output will be in the `images/taxon_structured/` directory.
 
-The output of this step is used to train the image classification models in the [Wildlife Classification](https://github.com/Spatiotemporal-Wildlife-Classification/Wildlife-Classification) repository.
-The documentation for this Repository is available at: https://spatiotemporal-wildlife-classification.github.io/Wildlife-Classification/
+The `taxon_train` and the `taxon_validate` directories inside the `data/images/taxon_structured` should be placed 
+within the `data/images/` directory of the Wildlife Classification repository.
+
+## Output
+The training and validation datasets organized within the taxonomic structure are used as the training and validation 
+sets of the image classification model training in the [Wildlife Classification](https://github.com/Spatiotemporal-Wildlife-Classification/Wildlife-Classification) Repository
+
+For example, the _Elephantidae_ and _Felidae_ training taxonomic directory (to genus level) should resemble:
+<img height="315" src="resources/tree.png" width="500" alt="Raw observation Image" style="display: block; margin: 0 auto"/>
+
+
+## Project layout
+
+    ai4eutils/  # ai4eutils repository
+    CameraTraps/  # CameraTraps repository
+    data/  
+    docs/  
+    yolov5/  # Yolov5 repository
+    resources/  # Resources for documentation
+    bounding_boxes.json  # Step 2 resulting file
+    dataset_structure.py  # Step 4
+    detection_cropping.py  # Step 3
+    mkdocs.yml  # Documentation configuration
+    raw_data_access.py  # Step 1
+    README.md 

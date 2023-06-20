@@ -1,0 +1,15 @@
+site_name: Animal Detection
+
+theme:
+  name: "material"
+
+plugins:
+- mkdocstrings:
+    default_handler: python
+
+nav:
+  - Home: index.md
+  - 1.Download Observations Docs: download.md
+  - 2.Mega-detector Animal Detection: mega_detector.md
+  - 3.Create Sub-images: cropping.md
+  - 4.Taxonomic Directory Structure Docs: taxon_directory.md
