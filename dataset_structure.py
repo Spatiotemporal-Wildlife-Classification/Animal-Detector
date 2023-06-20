@@ -1,16 +1,15 @@
 import sys
 import random
 import numpy as np
-from src.structure import Config
-from src.models.meta.pipelines import sub_species_detection
 import pandas as pd
 import os
 import shutil
 
-raw_img_path = Config.root_dir() + '/data/taxon_raw/'
-img_path = Config.root_dir() + '/data/taxon/'
-test_path = Config.root_dir() + '/data/taxon_test/'
-data_path = Config.root_dir() + '/data/processed/'
+root_path = root_path = sys.path[1]
+raw_img_path = root_path + '/data/taxon_raw/'
+img_path = root_path + '/data/taxon/'
+test_path = root_path + '/data/taxon_test/'
+data_path = root_path + '/data/processed/'
 multiple_detections_id = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r']
 
 img_size = 528
