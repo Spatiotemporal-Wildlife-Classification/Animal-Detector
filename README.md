@@ -16,8 +16,9 @@ Please perform the following steps to download the raw images for an iNaturalist
 3. Execute the file. The progress bar will update you on the status of the download.
 
 ### 2. Mega-detector Animal Detection
-This process makes use of [Mega-detector](https://github.com/microsoft/CameraTraps/blob/main/megadetector.md) 
-to detect and place bounding boxes around individual animal instances within a raw image. 
+This process makes use of [Mega-detector](https://github.com/microsoft/CameraTraps/blob/main/megadetector.md).
+The below documentation is based off the provided instructions in the [Mega-detector](https://github.com/microsoft/CameraTraps/blob/main/megadetector.md) README file.
+To detect and place bounding boxes around individual animal instances within a raw image. 
 The bounding boxes, serve as the boundaries around which the images are cropped to produce sub-images per observation. 
 A certainty of 75% is enforced for each animal detection. 
 Each sub-image has the naming format: <Observation id>_<sub_image_char>.png
