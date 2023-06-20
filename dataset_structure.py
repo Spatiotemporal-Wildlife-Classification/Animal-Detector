@@ -87,70 +87,92 @@ def sub_species_detection(x):
 
 
 def taxonomic_analysis(df: pd.DataFrame):
-    # Taxonomy breakdown
-    taxonomy_list = ['taxon_family_name', 'taxon_genus_name', 'taxon_species_name', 'sub_species']
-    taxon_breakdown = dict()
+    """This method performs a taxonomic analysis, whereby it identifies each unique label at the specified taxonomic levels.
 
-    # Identify each unique taxon level mammal
-    for taxon in taxonomy_list:
+    This method in this cause can be used to visualize the potential unique taxonomic labels, but is not required in the taxon directory process.
+    Args:
+        df (DataFrame): The dataframe containing all observations.
+
+    Returns:
+        (dict): A dictionary whereby the keys are the specified taxon levels, and the values are a list of unique taxon labels at each level.
+    """
+    taxonomy_list = ['taxon_family_name', 'taxon_genus_name', 'taxon_species_name', 'sub_species']  # Specify taxonomic levels at which the analysis should occur
+    taxon_breakdown = dict()  # Dictionary to contain unique values per level.
+
+    for taxon in taxonomy_list:  # For each taxonomic level
         df = df.dropna(subset=[taxon])  # Remove all n/a labels
         taxon_breakdown[taxon] = df[taxon].unique().tolist()  # Find unique taxon level genus names
     return taxon_breakdown
 
 
-def image_download(x):
+def image_access(x):
+    """This method creates the taxonomic path based on the specified taxonomic levels. The resulting path indicates
+     where in the taxon directory the image will be stored.
+
+     Additionally, this method splits the images into training and validation datasets.
+     This method is used in conjunction with the `DataFrame.apply()` method and the lambda expression.
+     This method updates the status bar upon saving the sub-image into the correct directory.
+
+     Args:
+         x (Row): The row of the dataframe representing a single observation.
+     """
     global count
-    path = img_path
-    set_decider = random.uniform(0, 1)
-    if set_decider < test_split:
+    path = img_path  # Path is set to the training set by default
+    set_decider = random.uniform(0, 1)  # Generate a random uniform value
+    if set_decider < test_split:  # If the probability is less that the test_split the image is sent to the validation set instead.
         path = test_path
 
-    for level in taxonomy_list:
-        taxon_level = x[level]
+    for level in taxonomy_list:  # Iterate down the taxonomic levels
+        taxon_level = x[level]  # This is the taxon label at this level
 
-        if taxon_level is np.nan:
+        if taxon_level is np.nan:  # If the taxon level is null, then there exist no further labels below. This is the final path
             break
 
-        # Clean file path
-        taxon_level = taxon_level.replace(" ", "_")
+        taxon_level = taxon_level.replace(" ", "_")  # Clean file path (lowercase and no spaces)
         taxon_level = taxon_level.lower()
         path = path + taxon_level + "/"
 
-    multiple_obs(x['id'], path)
+    multiple_obs(x['id'], path)  # Account for multiple observations at the same file path.
 
-    count = count + 1
-    status_bar_update()
+    count = count + 1  # Increase the completed observation count
+    status_bar_update()  # Update the status bar
 
 
 def multiple_obs(id, path):
-    for suffix in multiple_detections_id:
-        raw_path = cropped_img_path + str(id) + '_' + suffix + '.jpg'
-        if os.path.exists(raw_path):
+    """This method searches for multiple sub-images per observation in order to place them at the same file path within the taxonomic directories.
+
+    This method copies the images from the `images/cropped/` directory to the target file path specified.
+
+    Args:
+        id (int): The unique observation id.
+        path (str): The path to the correct taxon directory within the taxonomic directory structure. This path should be the same for all sub-images of an observation.
+    """
+    for suffix in multiple_detections_id:  # Iterate through the possible sub-image suffixes
+        raw_path = cropped_img_path + str(id) + '_' + suffix + '.jpg'  # Create a path with that suffix which could already exist within the cropped images directory
+        if os.path.exists(raw_path):  # Path exists so copy file to destination path
             file_name = path + str(id) + '_' + suffix + '.jpg'
             os.makedirs(os.path.dirname(file_name), exist_ok=True)
             shutil.copy(raw_path, file_name)
-        else:
+        else:  # No file exists, stop searching for further sub-images
             break
 
 
 def status_bar_update():
+    """This method updates the visual status bar to represent the status of the image download.
+    """
     progress_bar_length = 50
     percentage_complete = count / length
-    filled = int(progress_bar_length * percentage_complete)
+    filled = int(progress_bar_length * percentage_complete)  # Calculate the percentage of the bar completed.
 
     bar = '=' * filled + '-' * (progress_bar_length - filled)
-    percentage_display = round(100 * percentage_complete, 5)
+    percentage_display = round(100 * percentage_complete, 5)  # Round percentage complete to 5 decimals for display
     sys.stdout.write('\r[%s] %s%s ... count: %s' % (bar, percentage_display, '%', count))
     sys.stdout.flush()
 
 
 if __name__ == "__main__":
-    observations = ['proboscidia_train.csv']
-    df = create_dataset(observations)
+    observations = ['proboscidia_train.csv']  # Specify the datasets to convert into taxonomic directories.
+    df = create_dataset(observations)  # Create the dataset
+    df = df.apply(lambda x: sub_species_detection(x), axis=1)  # Generate sub_species
 
-    # Generate sub_species
-    df = df.apply(lambda x: sub_species_detection(x), axis=1)
-
-    taxon_breakdown = taxonomic_analysis(df.copy())
-
-    df.apply(lambda x: image_download(x), axis=1)
+    df.apply(lambda x: image_access(x), axis=1)  # Perform the taxon directory construction
