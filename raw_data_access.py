@@ -58,30 +58,35 @@ def image_download(x):
     """
     global count
     file_name = raw_image_path + str(x['id']) + '.jpg'
-    if not os.path.exists(file_name):
+
+    if not os.path.exists(file_name):  # If the file doesn't exist to avoid repeated downloads
         try:
             img_data = requests.get(x['image_url'], timeout=3).content
             with open(file_name, 'wb') as f:
                 f.write(img_data)
         except:
             print('Error in retrieving image: ', x['id'])
-    count = count + 1
-    status_bar_update()
+
+    count = count + 1  # Update the global count
+    status_bar_update()  # Update the status bar
 
 
 def status_bar_update():
+    """This method updates the visual status bar to represent the status of the image download.
+    """
     progress_bar_length = 50
     percentage_complete = count / length
-    filled = int(progress_bar_length * percentage_complete)
+    filled = int(progress_bar_length * percentage_complete)  # Calculate the percentage of the bar completed.
 
     bar = '=' * filled + '-' * (progress_bar_length - filled)
-    percentage_display = round(100 * percentage_complete, 5)
+    percentage_display = round(100 * percentage_complete, 5)  # Round percentage complete to 5 decimals for display
     sys.stdout.write('\r[%s] %s%s ... count: %s' % (bar, percentage_display, '%', count))
     sys.stdout.flush()
 
 
 if __name__ == '__main__':
-    observations = 'proboscidia_train.csv'
-    df = create_dataset(observations)
+    """Please specify the `observation.csv` file you wish to extract images for."""
 
-    df.apply(lambda x: image_download(x), axis=1)
+    observations = 'proboscidia_train.csv'
+    df = create_dataset(observations)  # Create the DataFrame to be used
+    df.apply(lambda x: image_download(x), axis=1)  # Extract the images
