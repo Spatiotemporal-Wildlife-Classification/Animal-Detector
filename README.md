@@ -1,6 +1,6 @@
 # Animal Detector
 
-This repository serves 3 purposes: 
+This repository serves 4 purposes arranged in sequential steps: 
 1. Download the raw observation images from iNaturalist observations. 
 2. Execute Mega-detector object detection to identify individual animal instances
 3. Crop Mega-detector animal instanced into sub-images
@@ -97,7 +97,7 @@ Please perform the following steps to crop the images according to the Mega-dete
    - The resulting cropped images will be placed within the `images/cropped/` directory.
 
 
-### 3. Taxonomic Directory Structure
+### 4. Taxonomic Directory Structure
 This final step places the sub-images into a directory that mimics the taxonomic structure of the dataset. 
 This taxonomic structure enables the use of the keras [`image_dataset_from_directory()`](https://www.tensorflow.org/api_docs/python/tf/keras/utils/image_dataset_from_directory) method 
 in the [Wildlife Classification](https://github.com/Spatiotemporal-Wildlife-Classification/Wildlife-Classification)
