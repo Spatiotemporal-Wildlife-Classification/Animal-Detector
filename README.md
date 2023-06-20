@@ -83,3 +83,32 @@ Please note, when wanting to use the Mega-detector functionality, steps 4 and 5 
 ![Object Detections](resources/raw_detections.jpg)
 
 ### 3. Create Sub-images
+The `detection_cropping.py` file is responsible for performing the sub-image cropping process.
+The process makes use of the `bounding_boxes.json` file containing all Mega-detector detections.
+The process, converts the provided bounding boxes for the _animal_ category into coordinates within the image. 
+The images is cropped based on these coordinates. The cropping reduces image resolution. 
+To combat the loss of resolution Lanzos interpolation and edge sharpening kernels were used to enhance the resulting
+sub-image. 
+
+Please perform the following steps to crop the images according to the Mega-detector object detections. 
+1. Ensure steps 1 and 2 are completed and the results are in the specified directories. 
+2. Simply run the script. 
+   - The resulting cropped images will be placed within the `images/cropped/` directory.
+
+
+### 3. Taxonomic Directory Structure
+This final step places the sub-images into a directory that mimics the taxonomic structure of the dataset. 
+This taxonomic structure enables the use of the keras [`image_dataset_from_directory()`](https://www.tensorflow.org/api_docs/python/tf/keras/utils/image_dataset_from_directory) method 
+in the [Wildlife Classification](https://github.com/Spatiotemporal-Wildlife-Classification/Wildlife-Classification)
+repository. This enables automated image dataset construction and label inference based on the directory structure.
+The images are split into training and validation sets. The validation set comprises 15% of the available data.
+
+To create the taxonomic directory structure please follow the below steps:
+1. Ensure steps 1-3 are completed and have produced the expected results.
+2. Specify the dataset names on line 174. These datasets are what the dataset taxonomic structure is based on.
+   - Note the names can also be specified one at a time. The result will be the same.
+3. Execute the script. 
+   - The output will be in the `images/taxon_structured/` directory.
+
+The output of this step is used to train the image classification models in the [Wildlife Classification](https://github.com/Spatiotemporal-Wildlife-Classification/Wildlife-Classification) repository.
+The documentation for this Repository is available at: https://spatiotemporal-wildlife-classification.github.io/Wildlife-Classification/
