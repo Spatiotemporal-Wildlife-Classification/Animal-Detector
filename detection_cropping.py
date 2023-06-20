@@ -1,7 +1,7 @@
 """This file creates sub-images based on Mega-detector animal detections within the raw observation images.
 
     It is essential, that steps 1 and 2 in the README are completed before this step, as the downloaded raw observation images
-    and the object detection    bounding_box.json` file are required for this script's execution.
+    and the object detection bounding_box.json` file are required for this script's execution.
 
     Attributes:
         root_path (str): The absolute path to the root of the project directory.
